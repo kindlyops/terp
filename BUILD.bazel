@@ -125,3 +125,17 @@ sh_binary(
     tags = ["manual"],
     visibility = ["//visibility:public"],
 )
+
+sh_binary(
+    name = "lint",
+    srcs = ["lint.sh"],
+    args = [
+        "$(location @bazel_gazelle//cmd/gazelle)",
+    ],
+    data = [
+        "@bazel_gazelle//cmd/gazelle",
+        "@go_sdk//:files",
+    ],
+    tags = ["manual"],
+    visibility = ["//visibility:public"],
+)

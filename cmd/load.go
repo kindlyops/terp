@@ -30,12 +30,10 @@ var loadCmd = &cobra.Command{
 }
 
 func load(cmd *cobra.Command, args []string) {
-
 	target := args[0]
 	_, _ = os.Stat(target)
 
 	log.Fatal("TODO")
-
 }
 
 func init() {
