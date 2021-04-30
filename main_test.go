@@ -12,8 +12,8 @@ import (
 )
 
 var (
-	cli     = flag.String("cli", "", "The CLI binary")
-	version string
+	cli            = flag.String("cli", "", "The CLI binary")
+	version string = "dev"
 )
 
 func TestMain(m *testing.M) {
