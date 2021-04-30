@@ -41,7 +41,7 @@ Want to help add features or fix bugs? Awesome! terp is built using bazel.
 
     `brew install bazelisk`
     grab the source code from github
-    `bazel run :terp-darwin` to compile and run the current version on macOS
+    `bazel run terp` to compile and run the locally compiled version
 
 ### Testing release process
 
