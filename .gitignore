@@ -1,0 +1,10 @@
+terp
+bazel-bin
+bazel-terp
+bazel-out
+bazel-testlogs
+bazel-workspace
+bdist
+dist
+.vscode/
+*.mp4
