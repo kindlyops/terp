@@ -2,7 +2,7 @@
 
 # eBPF experimental diagnostic interpreter
 
-## IVS - OSC bridge
+## terp - eBPF pry bar
 
 An interpreter with diagnostic functions for learning about and validating
 eBPF IR.
