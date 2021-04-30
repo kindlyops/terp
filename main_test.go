@@ -11,8 +11,10 @@ import (
 	"github.com/bazelbuild/rules_go/go/tools/bazel"
 )
 
-var cli = flag.String("cli", "", "The CLI binary")
-var version string
+var (
+	cli     = flag.String("cli", "", "The CLI binary")
+	version string
+)
 
 func TestMain(m *testing.M) {
 	os.Exit(m.Run())
@@ -40,7 +42,6 @@ func TestCLIVersion(t *testing.T) {
 	}
 
 	file, err := filepath.EvalSymlinks(path)
-
 	if err != nil {
 		t.Fatalf("Invalid filename %v", path)
 	}
