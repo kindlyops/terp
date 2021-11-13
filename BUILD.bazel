@@ -21,8 +21,19 @@ go_library(
 go_binary(
     name = "terp-linux",
     embed = [":go_default_library"],
-    goos = "linux",
     goarch = "amd64",
+    goos = "linux",
+    visibility = ["//visibility:public"],
+    x_defs = {
+        "version": VERSION,
+    },
+)
+
+go_binary(
+    name = "terp-linux-arm",
+    embed = [":go_default_library"],
+    goarch = "arm64",
+    goos = "linux",
     visibility = ["//visibility:public"],
     x_defs = {
         "version": VERSION,
@@ -32,8 +43,19 @@ go_binary(
 go_binary(
     name = "terp-darwin",
     embed = [":go_default_library"],
-    goos = "darwin",
     goarch = "amd64",
+    goos = "darwin",
+    visibility = ["//visibility:public"],
+    x_defs = {
+        "version": VERSION,
+    },
+)
+
+go_binary(
+    name = "terp-darwin-m1",
+    embed = [":go_default_library"],
+    goarch = "arm64",
+    goos = "darwin",
     visibility = ["//visibility:public"],
     x_defs = {
         "version": VERSION,
@@ -43,8 +65,8 @@ go_binary(
 go_binary(
     name = "terp-windows",
     embed = [":go_default_library"],
-    goos = "windows",
     goarch = "amd64",
+    goos = "windows",
     visibility = ["//visibility:public"],
     x_defs = {
         "version": VERSION,
@@ -55,7 +77,9 @@ alias(
     name = "terp",
     actual = select({
         "@io_bazel_rules_go//go/platform:linux_amd64": ":terp-linux",
+        "@io_bazel_rules_go//go/platform:linux_arm64": ":terp-linux-arm",
         "@io_bazel_rules_go//go/platform:darwin_amd64": ":terp-darwin",
+        "@io_bazel_rules_go//go/platform:darwin_arm64": ":terp-darwin-m1",
         "@io_bazel_rules_go//go/platform:windows_amd64": ":terp-windows",
         "//conditions:default": ":terp-linux",
     }),
@@ -68,9 +92,21 @@ copy_file(
 )
 
 copy_file(
+    name = "install-darwin-m1",
+    src = "//:terp-darwin-m1",
+    out = "bdist/terp_darwin_arm64/terp",
+)
+
+copy_file(
     name = "install-linux",
     src = "//:terp-linux",
     out = "bdist/terp_linux_amd64/terp",
+)
+
+copy_file(
+    name = "install-linux-arm",
+    src = "//:terp-linux-arm",
+    out = "bdist/terp_linux_arm64/terp",
 )
 
 copy_file(
@@ -87,27 +123,38 @@ go_test(
         "@io_bazel_rules_go//go/platform:linux_amd64": [
             "$(location :terp-linux)",
         ],
+        "@io_bazel_rules_go//go/platform:linux_arm64": [
+            "$(location :terp-linux-arm)",
+        ],
         "@io_bazel_rules_go//go/platform:darwin_amd64": [
             "$(location :terp-darwin)",
+        ],
+        "@io_bazel_rules_go//go/platform:darwin_arm64": [
+            "$(location :terp-darwin-m1)",
         ],
         "@io_bazel_rules_go//go/platform:windows_amd64": [
             "$(location :terp-windows)",
         ],
-        "//conditions:default": [],
+        "//conditions:default": ["update go_default_test args"],
     }),
     data = select({
         "@io_bazel_rules_go//go/platform:linux_amd64": [
             ":terp-linux",
         ],
+        "@io_bazel_rules_go//go/platform:linux_arm64": [
+            ":terp-linux-arm",
+        ],
         "@io_bazel_rules_go//go/platform:darwin_amd64": [
             ":terp-darwin",
+        ],
+        "@io_bazel_rules_go//go/platform:darwin_arm64": [
+            ":terp-darwin-m1",
         ],
         "@io_bazel_rules_go//go/platform:windows_amd64": [
             ":terp-windows",
         ],
         "//conditions:default": [],
     }),
-    embed = [":go_default_library"],
     rundir = ".",
     deps = ["//vendor/github.com/bazelbuild/rules_go/go/tools/bazel:go_default_library"],
 )
