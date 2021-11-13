@@ -1,6 +1,6 @@
 module github.com/kindlyops/terp
 
-go 1.15
+go 1.17
 
 require (
 	// If changing rules_go version, remember to change version in WORKSPACE also
