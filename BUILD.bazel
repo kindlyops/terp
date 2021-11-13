@@ -21,8 +21,8 @@ go_library(
 go_binary(
     name = "terp-linux",
     embed = [":go_default_library"],
-    goos = "linux",
     goarch = "amd64",
+    goos = "linux",
     visibility = ["//visibility:public"],
     x_defs = {
         "version": VERSION,
@@ -32,8 +32,8 @@ go_binary(
 go_binary(
     name = "terp-linux-arm",
     embed = [":go_default_library"],
-    goos = "linux",
     goarch = "arm64",
+    goos = "linux",
     visibility = ["//visibility:public"],
     x_defs = {
         "version": VERSION,
@@ -43,8 +43,8 @@ go_binary(
 go_binary(
     name = "terp-darwin",
     embed = [":go_default_library"],
-    goos = "darwin",
     goarch = "amd64",
+    goos = "darwin",
     visibility = ["//visibility:public"],
     x_defs = {
         "version": VERSION,
@@ -54,8 +54,8 @@ go_binary(
 go_binary(
     name = "terp-darwin-m1",
     embed = [":go_default_library"],
-    goos = "darwin",
     goarch = "arm64",
+    goos = "darwin",
     visibility = ["//visibility:public"],
     x_defs = {
         "version": VERSION,
@@ -65,8 +65,8 @@ go_binary(
 go_binary(
     name = "terp-windows",
     embed = [":go_default_library"],
-    goos = "windows",
     goarch = "amd64",
+    goos = "windows",
     visibility = ["//visibility:public"],
     x_defs = {
         "version": VERSION,
@@ -129,13 +129,13 @@ go_test(
         "@io_bazel_rules_go//go/platform:darwin_amd64": [
             "$(location :terp-darwin)",
         ],
-         "@io_bazel_rules_go//go/platform:darwin_arm64": [
+        "@io_bazel_rules_go//go/platform:darwin_arm64": [
             "$(location :terp-darwin-m1)",
         ],
         "@io_bazel_rules_go//go/platform:windows_amd64": [
             "$(location :terp-windows)",
         ],
-        "//conditions:default": ['update go_default_test args'],
+        "//conditions:default": ["update go_default_test args"],
     }),
     data = select({
         "@io_bazel_rules_go//go/platform:linux_amd64": [
@@ -155,7 +155,6 @@ go_test(
         ],
         "//conditions:default": [],
     }),
-    embed = [":go_default_library"],
     rundir = ".",
     deps = ["//vendor/github.com/bazelbuild/rules_go/go/tools/bazel:go_default_library"],
 )
